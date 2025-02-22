@@ -1,3 +1,6 @@
+## 0.1.3
+- format optimization 
+
 ## 0.1.2
 - tiny tuned of README
 

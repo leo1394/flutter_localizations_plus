@@ -7,13 +7,12 @@ void main() => runApp(MyApp());
 class MyApp extends StatelessWidget {
   MyApp({Key? key}) : super(key: key);
 
-  List<Map<String, dynamic>> formatted =
-      Translations.supported( [
-        Localization.en_US,
-        Localization.zh_Hans,
-        Localization.fr_CA,
-        Localization.pt_BR
-      ], selected: Localization.zh_Hans);
+  List<Map<String, dynamic>> formatted = Translations.supported([
+    Localization.en_US,
+    Localization.zh_Hans,
+    Localization.fr_CA,
+    Localization.pt_BR
+  ], selected: Localization.zh_Hans);
 
   @override
   Widget build(BuildContext context) {

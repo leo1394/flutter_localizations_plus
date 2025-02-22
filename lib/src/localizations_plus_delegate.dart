@@ -14,6 +14,7 @@ import 'translations.dart';
 class LocalizationsPlusDelegate extends LocalizationsDelegate<Translations> {
   /// optional assetBundle for load locale json file
   final AssetBundle? bundle;
+
   /// optional fallback of locale
   final String fallbackLocale;
   const LocalizationsPlusDelegate({this.bundle, this.fallbackLocale = "en_US"});

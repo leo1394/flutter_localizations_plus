@@ -26,6 +26,7 @@ class Translations {
   static List<Map<String, dynamic>>? _localeSupportedArr;
   static Map<String, dynamic>? _fallback;
   static Map<String, dynamic>? _selected;
+
   /// StreamController for stream subscription listening language changed in `Translations`
   static final StreamController<Map<String, dynamic>> controller =
       StreamController<Map<String, dynamic>>();
