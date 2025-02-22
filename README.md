@@ -9,11 +9,6 @@
 
 An enhanced Flutter localization solution that streamlines multilingual integration for seamless app development.
 
-- `factory`: generates AJAX request functions by api URI name in WYSIWYG style.
-- `mock`: mocking data from a local JSON file for specified requests during development.
-- `silent`: suppress routing redirection for unauthorized or maintenance responses for specified request.
-- request futures functions generated can be accessed by dot notation.
-
 ## Platform Support
 
 | Android | iOS | MacOS | Web | Linux | Windows |

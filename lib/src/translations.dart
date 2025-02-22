@@ -18,6 +18,7 @@ import 'locales.dart';
 ///          - locale/     # for multiple languages
 ///
 class Translations {
+  /// current locale loaded
   Locale? locale;
   static Translations? _instance;
   static Map<String, dynamic>? _localizedValues; //当前语言
@@ -25,6 +26,7 @@ class Translations {
   static List<Map<String, dynamic>>? _localeSupportedArr;
   static Map<String, dynamic>? _fallback;
   static Map<String, dynamic>? _selected;
+  /// StreamController for stream subscription listening language changed in `Translations`
   static final StreamController<Map<String, dynamic>> controller =
       StreamController<Map<String, dynamic>>();
 

@@ -12,7 +12,9 @@ import 'translations.dart';
 /// parameter (a list of delegates). The delegate's [type] is used to identify
 /// the object created by an individual delegate's [load] method.
 class LocalizationsPlusDelegate extends LocalizationsDelegate<Translations> {
+  /// optional assetBundle for load locale json file
   final AssetBundle? bundle;
+  /// optional fallback of locale
   final String fallbackLocale;
   const LocalizationsPlusDelegate({this.bundle, this.fallbackLocale = "en_US"});
 
