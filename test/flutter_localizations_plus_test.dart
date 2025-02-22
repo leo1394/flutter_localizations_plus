@@ -7,10 +7,17 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   setUp(() {
-    List<String> localesSupported = [Localization.en_US, Localization.zh_Hans, Localization.fr_CA, Localization.pt_BR];
+    List<String> localesSupported = [
+      Localization.en_US,
+      Localization.zh_Hans,
+      Localization.fr_CA,
+      Localization.pt_BR
+    ];
     String localeSelected = Localization.zh_Hans;
-    List<Map<String, dynamic>> formatted = Translations.supported(localesSupported, selected: localeSelected);
-    print("all locales supported ==> $formatted, locales ==> ${Translations.supportedLocales}");
+    List<Map<String, dynamic>> formatted =
+        Translations.supported(localesSupported, selected: localeSelected);
+    print(
+        "all locales supported ==> $formatted, locales ==> ${Translations.supportedLocales}");
   });
 
   test('Locale delegate provides list of locale codes', () {
@@ -50,10 +57,12 @@ class Home extends StatelessWidget {
       body: Column(
         children: [
           Center(
-            child: Text(Translations.of(context).text("flight_broadcast_test", ["flutter_localizations_plus", "pub.dev"])),
+            child: Text(Translations.of(context).text("flight_broadcast_test",
+                ["flutter_localizations_plus", "pub.dev"])),
           ),
           Text(Translations.of(context).text("welcome_tips")),
-          Text(Translations.of(context).text("local_time_caption", DateTime.now())),
+          Text(Translations.of(context)
+              .text("local_time_caption", DateTime.now())),
         ],
       ),
     );

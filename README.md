@@ -42,10 +42,12 @@ flutter pub add flutter_localizations_plus
 
 - Initializes [Translations] with `supported` locales and optional parameters.
 ```dart
-    List<String> localesSupported = [Localization.en_US, Localization.zh_Hans, Localization.fr_CA, Localization.pt_BR];
-    String localeSelected = Localization.zh_Hans;
-    
-    List<Map<String, dynamic>> formatted = Translations.supported(localesSupported, selected: localeSelected);
+    List<Map<String, dynamic>> formatted = Translations.supported([
+      Localization.en_US, 
+      Localization.zh_Hans, 
+      Localization.fr_CA, 
+      Localization.pt_BR
+    ], selected: Localization.zh_Hans, fallback: Localization.en_US);
 ```
 
 - Add delegates (`LocalizationsPlusDelegate` and `FallbackCupertinoLocalizationsDelegate`) to localizationsDelegates and assign supportedLocales with Translations.supportedLocales for WidgetsApp Created. 

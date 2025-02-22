@@ -25,7 +25,8 @@ class Translations {
   static List<Map<String, dynamic>>? _localeSupportedArr;
   static Map<String, dynamic>? _fallback;
   static Map<String, dynamic>? _selected;
-  static final StreamController<Map<String, dynamic>> controller = StreamController<Map<String, dynamic>>();
+  static final StreamController<Map<String, dynamic>> controller =
+      StreamController<Map<String, dynamic>>();
 
   Translations(Locale this.locale);
 
@@ -55,7 +56,7 @@ class Translations {
     } catch (e) {
       fmt = _defaultText(key);
     }
-    if(args != null && args is! List) {
+    if (args != null && args is! List) {
       args = [args];
     }
     return args != null && args.isNotEmpty ? sprintf(fmt, args) : fmt;
@@ -64,16 +65,25 @@ class Translations {
   /// Start loading the resources for `locale`. The returned future completes
   /// when the resources have finished loading.
   static Future<Translations> load(Locale locale) async {
-    assert(_fallback != null, "initialize [Translations] through function `supported` before use");
-    if(_instance != null){ return _instance!; }
+    assert(_fallback != null,
+        "initialize [Translations] through function `supported` before use");
+    if (_instance != null) {
+      return _instance!;
+    }
 
     String localeName = Platform.localeName;
     Map<String, dynamic> supportedDefaultLocale = _fallback!;
     // priority order: locale specified > platform language settings > Translations fallback locale
-    List<String> localeOptions = _localeSupportedArr!.map<String>((item) => item["locale"]).toList();
+    List<String> localeOptions =
+        _localeSupportedArr!.map<String>((item) => item["locale"]).toList();
 
-    String selected = [locale.toString(), localeName, supportedDefaultLocale["locale"]].firstWhere((element) => localeOptions.contains(element));
-    Map<String, dynamic> localeSelected = _localeSupportedArr!.firstWhere((element) => element["locale"] == selected);
+    String selected = [
+      locale.toString(),
+      localeName,
+      supportedDefaultLocale["locale"]
+    ].firstWhere((element) => localeOptions.contains(element));
+    Map<String, dynamic> localeSelected = _localeSupportedArr!
+        .firstWhere((element) => element["locale"] == selected);
 
     String l10nJsonFile = localeSelected["l10n"];
     _fallbackLocalizedValues = await _loadJsonFile(l10nJsonFile);
@@ -84,46 +94,65 @@ class Translations {
 
   /// getter function of all standard locale list of Map filtered by `supported`
   static get allSupported => _localeSupportedArr;
+
   /// stream subscription for listening language changed in `Translations`
   static get streamSubscription => controller.stream.listen(null);
+
   /// getter function of fallback locale if no text found in selected locale json file
   static get fallback => _fallback;
+
   /// getter function of current locale selected
   static get selected => _selected;
-  /// getter function of Iterate<Locale> for [MaterialApp] `supportedLocales` configuration
-  static get supportedLocales => _localeSupportedArr?.map<Locale>((element) => new Locale(element["abbr"], element["region"]));
+
+  /// getter function of Iterate of Locale for [MaterialApp] `supportedLocales` configuration
+  static get supportedLocales => _localeSupportedArr?.map<Locale>(
+      (element) => new Locale(element["abbr"], element["region"]));
 
   /// Initializes [Translations] with supported locales and optional parameters.
   ///
   /// - [locales]: List of supported language codes (e.g., `zh_Hans`, `en_US`, `fr_CA`).
   /// - [fallback]: Optional fallback locale. Defaults to the first item in [locales] if not specified.
   /// - [selected]: Optional language code to switch to once locale resources are loaded.
-  static List<Map<String, dynamic>> supported(List<String> locales, {String? fallback, String? selected}) {
-    List<String> filtered = locales.where((locale) => all_locales_supported.containsKey(locale)).toList();
-    if(filtered.isEmpty) {
+  static List<Map<String, dynamic>> supported(List<String> locales,
+      {String? fallback, String? selected}) {
+    List<String> filtered = locales
+        .where((locale) => all_locales_supported.containsKey(locale))
+        .toList();
+    if (filtered.isEmpty) {
       throw Exception("no valid Locale for support !");
     }
 
     String osLocaleName = Platform.localeName;
-    _localeSupportedArr = filtered.asMap().entries.map((entry) {
+    _localeSupportedArr = filtered
+        .asMap()
+        .entries
+        .map((entry) {
           int index = entry.key;
           String locale = entry.value;
-          Map<String, dynamic> formatted = (filtered.contains(fallback) || fallback == null && index == 0) ? {"fallback": true} : {};
+          Map<String, dynamic> formatted =
+              (filtered.contains(fallback) || fallback == null && index == 0)
+                  ? {"fallback": true}
+                  : {};
           formatted["locale"] = locale;
           formatted["abbr"] = locale.split("_")[0];
           formatted["region"] = locale.replaceAll("${formatted["abbr"]}_", "");
           formatted["name"] = all_locales_supported[locale];
           formatted["l10n"] = "locale/$locale.json";
           return formatted;
-      })
-      .cast<Map<String, dynamic>>()
-      .toList();
-    _fallback = _localeSupportedArr!.firstWhere((element) => element["fallback"] == true, orElse: () => _localeSupportedArr!.first);
+        })
+        .cast<Map<String, dynamic>>()
+        .toList();
+    _fallback = _localeSupportedArr!.firstWhere(
+        (element) => element["fallback"] == true,
+        orElse: () => _localeSupportedArr!.first);
 
     // initialize with current selected locale specified
     selected ??= osLocaleName;
-    List<String> localesSupported = _localeSupportedArr!.map((element) => element["locale"]).cast<String>().toList();
-    if(localesSupported.contains(selected)){
+    List<String> localesSupported = _localeSupportedArr!
+        .map((element) => element["locale"])
+        .cast<String>()
+        .toList();
+    if (localesSupported.contains(selected)) {
       changeLanguage(selected);
     }
     return _localeSupportedArr!;
@@ -132,7 +161,9 @@ class Translations {
   /// Manually updates app's locale (e.g., from UI language settings page selections).
   /// - [locale]: Language code (e.g. `zh_Hans`, `en_US`) supported by [Localization].
   static changeLanguage(String locale) async {
-    Map<String, dynamic> localeConf = _localeSupportedArr!.firstWhere((element) => element["locale"] == locale, orElse: () => _fallback!);
+    Map<String, dynamic> localeConf = _localeSupportedArr!.firstWhere(
+        (element) => element["locale"] == locale,
+        orElse: () => _fallback!);
     _localizedValues = await _loadJsonFile(localeConf["l10n"]);
     _selected = localeConf;
     controller.add(localeConf);

@@ -22,7 +22,9 @@ class LocalizationsPlusDelegate extends LocalizationsDelegate<Translations> {
   /// method supports the given `locale`'s language.
   @override
   bool isSupported(Locale locale) {
-    return Translations.allSupported.map((locale) => locale["locale"]).contains(locale.toString());
+    return Translations.allSupported
+        .map((locale) => locale["locale"])
+        .contains(locale.toString());
   }
 
   /// Start loading the resources for `locale`. The returned future completes
@@ -33,7 +35,6 @@ class LocalizationsPlusDelegate extends LocalizationsDelegate<Translations> {
   /// per resource). The object will be retrieved with [Translations.of].
   @override
   Future<Translations> load(Locale locale) => Translations.load(locale);
-
 
   /// Returns true if the resources for this delegate should be loaded
   /// again by calling the [load] method.
