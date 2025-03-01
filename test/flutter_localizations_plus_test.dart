@@ -15,7 +15,7 @@ void main() {
     ];
     String localeSelected = Localization.zh_Hans;
     List<Map<String, dynamic>> formatted =
-        Translations.supported(localesSupported, selected: localeSelected);
+        Translations.support(localesSupported, selected: localeSelected);
     print(
         "all locales supported ==> $formatted, locales ==> ${Translations.supportedLocales}");
   });

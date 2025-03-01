@@ -35,14 +35,14 @@ flutter pub add flutter_localizations_plus
           - locale/     # for multiple languages
 ```
 
-- Initializes [Translations] with `supported` locales and optional parameters.
+- Initializes [Translations] with locales need to support and other optional parameters.
 ```dart
     List<Map<String, dynamic>> formatted = Translations.supported([
       Localization.en_US, 
       Localization.zh_Hans, 
       Localization.fr_CA, 
       Localization.pt_BR
-    ], selected: Localization.zh_Hans, fallback: Localization.en_US);
+    ], selected: Platform.localeName, fallback: Localization.en_US);
 ```
 
 - Add delegates (`LocalizationsPlusDelegate` and `FallbackCupertinoLocalizationsDelegate`) to localizationsDelegates and assign supportedLocales with Translations.supportedLocales for WidgetsApp Created. 
@@ -65,7 +65,7 @@ flutter pub add flutter_localizations_plus
     }
 ```
 
-- Retrieve locale JSON strings by [key]
+- Retrieve locale JSON strings by [key] with support sprintf-style arguments
 ```dart
     // 1. Uses sprintf-style ordered arguments for dynamic formatting.
     Translations.of(context).text("local_time_caption", DateTime.now());
@@ -78,7 +78,10 @@ flutter pub add flutter_localizations_plus
 
 - Manually updates app's locale (e.g., from UI language settings page selections).
 ```dart
-    String locale = Localization.fr_CA;
+    // [{locale, name, abbr, region, i10n}] e.g. [{locale: "fr_CA", name: "français (Canada)", abbr: "fr", region: "CA"}]
+    List<Map<String, dynamic>> allSupported = Translations.allSupported;
+    int idxSelected = 1;
+    String locale = allSupported[idxSelected]["locale"]; // Localization.fr_CA;
     await Translations.changeLanguage(locale);
 ```
 

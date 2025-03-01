@@ -1,3 +1,6 @@
+## 0.2.0
+- change `supported` function to `support` 
+
 ## 0.1.3
 - format optimization 
 

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations_plus/localization.dart';
 import 'package:flutter_localizations_plus/flutter_localizations_plus.dart';
@@ -7,12 +9,12 @@ void main() => runApp(MyApp());
 class MyApp extends StatelessWidget {
   MyApp({Key? key}) : super(key: key);
 
-  List<Map<String, dynamic>> formatted = Translations.supported([
+  List<Map<String, dynamic>> formatted = Translations.support([
     Localization.en_US,
     Localization.zh_Hans,
     Localization.fr_CA,
     Localization.pt_BR
-  ], selected: Localization.zh_Hans);
+  ], selected: Platform.localeName, fallback: Localization.zh_Hans);
 
   @override
   Widget build(BuildContext context) {

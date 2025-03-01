@@ -111,12 +111,12 @@ class Translations {
   static get supportedLocales => _localeSupportedArr?.map<Locale>(
       (element) => new Locale(element["abbr"], element["region"]));
 
-  /// Initializes [Translations] with supported locales and optional parameters.
+  /// Initializes [Translations] with locales need to support and optional parameters.
   ///
   /// - [locales]: List of supported language codes (e.g., `zh_Hans`, `en_US`, `fr_CA`).
   /// - [fallback]: Optional fallback locale. Defaults to the first item in [locales] if not specified.
   /// - [selected]: Optional language code to switch to once locale resources are loaded.
-  static List<Map<String, dynamic>> supported(List<String> locales,
+  static List<Map<String, dynamic>> support(List<String> locales,
       {String? fallback, String? selected}) {
     List<String> filtered = locales
         .where((locale) => all_locales_supported.containsKey(locale))
