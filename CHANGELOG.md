@@ -1,3 +1,6 @@
+## 0.2.1
+- async inform language change
+
 ## 0.2.0
 - change `supported` function to `support` 
 

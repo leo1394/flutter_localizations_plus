@@ -156,7 +156,7 @@ class Translations {
         .cast<String>()
         .toList();
     if (localesSupported.contains(selected)) {
-      changeLanguage(selected);
+      Future.delayed(const Duration(milliseconds: 150), () => changeLanguage(selected!));
     }
     return _localeSupportedArr!;
   }

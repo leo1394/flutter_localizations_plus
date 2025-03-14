@@ -7,7 +7,7 @@
 [![GitHub Stars](https://img.shields.io/github/stars/leo1394/flutter_localizations_plus.svg?branch=master)](https://github.com/leo1394/flutter_localizations_plus/stargazers)
 [![GitHub License](https://img.shields.io/badge/license-MIT%20-blue.svg)](https://raw.githubusercontent.com/leo1394/flutter_localizations_plus/master/LICENSE)
 
-An enhanced Flutter localization solution that streamlines multilingual integration for seamless app development.
+An enhanced Flutter localization one-stop solution that streamlines multilingual integration for seamless app development.
 
 ## Platform Support
 
