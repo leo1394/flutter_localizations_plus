@@ -551,7 +551,7 @@ const all_locales_supported = {
   "yo_BJ": "Èdè Yorùbá (Orílɛ́ède Bɛ̀nɛ̀)",
   "yo_NG": "Èdè Yorùbá (Orílẹ́ède Nàìjíríà)",
   "zh": "中文",
-  "zh_CN": "中文 (中国)",
+  "zh_CN": "中文 (简体中文)",
   "zh_HK": "中文 (中国香港特别行政区)",
   "zh_Hans": "中文 (简体中文)",
   "zh_Hans_CN": "中文 (简体中文, 中国)",

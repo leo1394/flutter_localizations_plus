@@ -1,3 +1,6 @@
+## 0.2.2
+- only change language when different from current selected
+
 ## 0.2.1
 - async inform language change
 

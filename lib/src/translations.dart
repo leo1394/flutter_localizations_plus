@@ -167,6 +167,7 @@ class Translations {
     Map<String, dynamic> localeConf = _localeSupportedArr!.firstWhere(
         (element) => element["locale"] == locale,
         orElse: () => _fallback!);
+    if(localeConf["locale"] == _selected?["locale"]) { return ; }
     _localizedValues = await _loadJsonFile(localeConf["l10n"]);
     _selected = localeConf;
     controller.add(localeConf);
