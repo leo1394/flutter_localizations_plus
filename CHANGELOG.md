@@ -1,3 +1,6 @@
+## 0.2.3
+- format dart file
+
 ## 0.2.2
 - only change language when different from current selected
 

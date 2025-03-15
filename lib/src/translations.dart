@@ -156,7 +156,8 @@ class Translations {
         .cast<String>()
         .toList();
     if (localesSupported.contains(selected)) {
-      Future.delayed(const Duration(milliseconds: 150), () => changeLanguage(selected!));
+      Future.delayed(
+          const Duration(milliseconds: 150), () => changeLanguage(selected!));
     }
     return _localeSupportedArr!;
   }
@@ -167,7 +168,9 @@ class Translations {
     Map<String, dynamic> localeConf = _localeSupportedArr!.firstWhere(
         (element) => element["locale"] == locale,
         orElse: () => _fallback!);
-    if(localeConf["locale"] == _selected?["locale"]) { return ; }
+    if (localeConf["locale"] == _selected?["locale"]) {
+      return;
+    }
     _localizedValues = await _loadJsonFile(localeConf["l10n"]);
     _selected = localeConf;
     controller.add(localeConf);
