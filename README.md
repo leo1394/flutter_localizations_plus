@@ -1,5 +1,5 @@
 
-## flutter_locations_plus
+## flutter_localizations_plus
 [![pub package](https://img.shields.io/pub/v/flutter_localizations_plus.svg)](https://pub.dev/packages/flutter_localizations_plus)
 [![pub points](https://img.shields.io/pub/points/flutter_localizations_plus?color=2E8B57&label=pub%20points)](https://pub.dev/packages/flutter_localizations_plus/score)
 [![GitHub Issues](https://img.shields.io/github/issues/leo1394/flutter_localizations_plus.svg?branch=master)](https://github.com/leo1394/flutter_localizations_plus/issues)
@@ -36,6 +36,7 @@ flutter pub add flutter_localizations_plus
 ```
 
 - Initializes [Translations] with locales need to support and other optional parameters.
+- IMPORTANT: Ensure [locale] supported JSON files are present in the `locale/` directory.
 ```dart
     List<Map<String, dynamic>> formatted = Translations.supported([
       Localization.en_US, 

@@ -1,3 +1,6 @@
+## 0.2.4
+- Readme optimization
+
 ## 0.2.3
 - format dart file
 
