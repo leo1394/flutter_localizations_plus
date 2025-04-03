@@ -155,10 +155,16 @@ class Translations {
         .map((element) => element["locale"])
         .cast<String>()
         .toList();
-    if (localesSupported.contains(selected)) {
-      Future.delayed(
-          const Duration(milliseconds: 150), () => changeLanguage(selected!));
+    List<String> fuzzyFiltered = localesSupported
+        .where(
+            (element) => element.split("_").first == selected!.split("_").first)
+        .toList();
+    if (!localesSupported.contains(selected)) {
+      selected =
+          fuzzyFiltered.isNotEmpty ? fuzzyFiltered.first : _fallback!["locale"];
     }
+    Future.delayed(
+        const Duration(milliseconds: 150), () => changeLanguage(selected!));
     return _localeSupportedArr!;
   }
 

@@ -1,3 +1,6 @@
+## 0.2.5
+- selected locale optimization
+
 ## 0.2.4
 - Readme optimization
 
