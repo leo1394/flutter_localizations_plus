@@ -1,3 +1,6 @@
+## 0.2.6
+- locales tuned
+
 ## 0.2.5
 - selected locale optimization
 
