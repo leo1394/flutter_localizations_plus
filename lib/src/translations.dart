@@ -155,10 +155,21 @@ class Translations {
         .map((element) => element["locale"])
         .cast<String>()
         .toList();
-    List<String> fuzzyFiltered = localesSupported
-        .where(
-            (element) => element.split("_").first == selected!.split("_").first)
-        .toList();
+
+    List<String>? fuzzyFiltered;
+    if (selected.split("_").length > 2) {
+      String simplified = selected.replaceAll(RegExp(r'_[a-zA-Z]+$'), "");
+      fuzzyFiltered =
+          localesSupported.where((element) => element == simplified).toList();
+    }
+
+    fuzzyFiltered = (fuzzyFiltered == null || fuzzyFiltered.isEmpty)
+        ? localesSupported
+            .where((element) =>
+                element.split("_").first == selected!.split("_").first)
+            .toList()
+        : fuzzyFiltered;
+
     if (!localesSupported.contains(selected)) {
       selected =
           fuzzyFiltered.isNotEmpty ? fuzzyFiltered.first : _fallback!["locale"];

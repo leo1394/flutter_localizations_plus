@@ -1,3 +1,6 @@
+## 0.2.7
+- locales default match tuned
+
 ## 0.2.6
 - locales tuned
 
