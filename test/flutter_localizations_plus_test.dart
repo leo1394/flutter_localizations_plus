@@ -1,6 +1,7 @@
 // Copyright (c) 2025, the Dart project authors. Use of this source code
 // is governed by a MIT license that can be found in the LICENSE file.
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations_plus/locale_config.dart';
 import 'package:flutter_localizations_plus/localization.dart';
 import 'package:flutter_localizations_plus/flutter_localizations_plus.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -14,10 +15,10 @@ void main() {
       Localization.pt_BR
     ];
     String localeSelected = Localization.zh_Hans;
-    List<Map<String, dynamic>> formatted =
+    List<LocaleConfig> formatted =
         Translations.support(localesSupported, selected: localeSelected);
     print(
-        "all locales supported ==> $formatted, locales ==> ${Translations.supportedLocales}");
+        "all locale supported ==> ${formatted.map((conf) => conf.toJson()).toList()}, locale ==> ${Translations.supportedLocales}");
   });
 
   test('Locale delegate provides list of locale codes', () {

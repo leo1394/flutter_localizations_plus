@@ -1,3 +1,6 @@
+## 0.3.0
+- LocaleConfig reconstructed and README tuned
+
 ## 0.2.7
 - locales default match tuned
 

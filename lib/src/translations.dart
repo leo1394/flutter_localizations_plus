@@ -4,6 +4,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+import 'package:flutter_localizations_plus/locale_config.dart';
 import 'package:sprintf/sprintf.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart' show rootBundle;
@@ -11,11 +12,11 @@ import 'locales.dart';
 
 /// A type localized resource class which should init `supported` before use.
 ///
-/// NOTE: [locale] directory which contains json files MUST declared in pubspec.yaml
+/// NOTE: [locales] directory which contains json files MUST declared in pubspec.yaml
 ///
 ///     flutter:
 ///        assets:
-///          - locale/     # for multiple languages
+///          - locales/     # for multiple languages
 ///
 class Translations {
   /// current locale loaded
@@ -23,13 +24,13 @@ class Translations {
   static Translations? _instance;
   static Map<String, dynamic>? _localizedValues; //当前语言
   static Map<String, dynamic>? _fallbackLocalizedValues; // 默认语言 map
-  static List<Map<String, dynamic>>? _localeSupportedArr;
-  static Map<String, dynamic>? _fallback;
-  static Map<String, dynamic>? _selected;
+  static List<LocaleConfig>? _localeSupportedArr;
+  static LocaleConfig? _fallback;
+  static LocaleConfig? _selected;
 
   /// StreamController for stream subscription listening language changed in `Translations`
-  static final StreamController<Map<String, dynamic>> controller =
-      StreamController<Map<String, dynamic>>();
+  static final StreamController<LocaleConfig> controller =
+      StreamController<LocaleConfig>();
 
   Translations(Locale this.locale);
 
@@ -75,22 +76,22 @@ class Translations {
     }
 
     String localeName = Platform.localeName;
-    Map<String, dynamic> supportedDefaultLocale = _fallback!;
+    Map<String, dynamic> supportedDefaultLocale = _fallback!.toJson();
     // priority order: locale specified > platform language settings > Translations fallback locale
     List<String> localeOptions =
-        _localeSupportedArr!.map<String>((item) => item["locale"]).toList();
+        _localeSupportedArr!.map<String>((item) => item.locale).toList();
 
     String selected = [
       locale.toString(),
       localeName,
       supportedDefaultLocale["locale"]
     ].firstWhere((element) => localeOptions.contains(element));
-    Map<String, dynamic> localeSelected = _localeSupportedArr!
-        .firstWhere((element) => element["locale"] == selected);
+    LocaleConfig localeSelected = _localeSupportedArr!
+        .firstWhere((element) => element.locale == selected);
 
-    String l10nJsonFile = localeSelected["l10n"];
+    String l10nJsonFile = localeSelected.l10n;
     _fallbackLocalizedValues = await _loadJsonFile(l10nJsonFile);
-    locale = Locale(localeSelected["abbr"], localeSelected["region"]);
+    locale = Locale(localeSelected.abbr, localeSelected.region);
     Translations translations = Translations(locale);
     return translations;
   }
@@ -108,15 +109,15 @@ class Translations {
   static get selected => _selected;
 
   /// getter function of Iterate of Locale for [MaterialApp] `supportedLocales` configuration
-  static get supportedLocales => _localeSupportedArr?.map<Locale>(
-      (element) => new Locale(element["abbr"], element["region"]));
+  static get supportedLocales => _localeSupportedArr
+      ?.map<Locale>((element) => new Locale(element.abbr, element.region));
 
-  /// Initializes [Translations] with locales need to support and optional parameters.
+  /// Initializes [Translations] with locale need to support and optional parameters.
   ///
   /// - [locales]: List of supported language codes (e.g., `zh_Hans`, `en_US`, `fr_CA`).
   /// - [fallback]: Optional fallback locale. Defaults to the first item in [locales] if not specified.
   /// - [selected]: Optional language code to switch to once locale resources are loaded.
-  static List<Map<String, dynamic>> support(List<String> locales,
+  static List<LocaleConfig> support(List<String> locales,
       {String? fallback, String? selected}) {
     List<String> filtered = locales
         .where((locale) => all_locales_supported.containsKey(locale))
@@ -132,27 +133,24 @@ class Translations {
         .map((entry) {
           int index = entry.key;
           String locale = entry.value;
-          Map<String, dynamic> formatted =
-              (filtered.contains(fallback) || fallback == null && index == 0)
-                  ? {"fallback": true}
-                  : {};
-          formatted["locale"] = locale;
-          formatted["abbr"] = locale.split("_")[0];
-          formatted["region"] = locale.replaceAll("${formatted["abbr"]}_", "");
-          formatted["name"] = all_locales_supported[locale];
-          formatted["l10n"] = "locale/$locale.json";
-          return formatted;
+          // 应该转成对象
+          String filepath = "locales/$locale.json";
+          bool canItBeFallback =
+              (filtered.contains(fallback) || fallback == null && index == 0);
+          LocaleConfig config =
+              LocaleConfig(locale, filepath, fallback: canItBeFallback);
+          return config;
         })
-        .cast<Map<String, dynamic>>()
+        .cast<LocaleConfig>()
         .toList();
     _fallback = _localeSupportedArr!.firstWhere(
-        (element) => element["fallback"] == true,
+        (element) => element.fallback == true,
         orElse: () => _localeSupportedArr!.first);
 
     // initialize with current selected locale specified
     selected ??= osLocaleName;
     List<String> localesSupported = _localeSupportedArr!
-        .map((element) => element["locale"])
+        .map((element) => element.locale)
         .cast<String>()
         .toList();
 
@@ -172,7 +170,7 @@ class Translations {
 
     if (!localesSupported.contains(selected)) {
       selected =
-          fuzzyFiltered.isNotEmpty ? fuzzyFiltered.first : _fallback!["locale"];
+          fuzzyFiltered.isNotEmpty ? fuzzyFiltered.first : _fallback!.locale;
     }
     Future.delayed(
         const Duration(milliseconds: 150), () => changeLanguage(selected!));
@@ -182,13 +180,13 @@ class Translations {
   /// Manually updates app's locale (e.g., from UI language settings page selections).
   /// - [locale]: Language code (e.g. `zh_Hans`, `en_US`) supported by [Localization].
   static changeLanguage(String locale) async {
-    Map<String, dynamic> localeConf = _localeSupportedArr!.firstWhere(
-        (element) => element["locale"] == locale,
+    LocaleConfig localeConf = _localeSupportedArr!.firstWhere(
+        (element) => element.locale == locale,
         orElse: () => _fallback!);
-    if (localeConf["locale"] == _selected?["locale"]) {
+    if (localeConf.locale == _selected?.locale) {
       return;
     }
-    _localizedValues = await _loadJsonFile(localeConf["l10n"]);
+    _localizedValues = await _loadJsonFile(localeConf.l10n);
     _selected = localeConf;
     controller.add(localeConf);
   }

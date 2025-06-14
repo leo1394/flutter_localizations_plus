@@ -26,7 +26,7 @@ class LocalizationsPlusDelegate extends LocalizationsDelegate<Translations> {
   @override
   bool isSupported(Locale locale) {
     return Translations.allSupported
-        .map((locale) => locale["locale"])
+        .map((conf) => conf.locale)
         .contains(locale.toString());
   }
 

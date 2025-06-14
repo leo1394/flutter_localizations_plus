@@ -28,17 +28,28 @@ flutter pub add flutter_localizations_plus
 ```
 
 ## Steps for Usage in Dart
-- IMPORTANT: [locale] directory which contains json files MUST declared in pubspec.yaml. 
+- IMPORTANT: [locales] directory which contains [locale] JSON files MUST declared in pubspec.yaml. 
 ```yaml
     flutter:
        assets:
-          - locale/     # for multiple languages
+          - locales/     # for multiple languages
+```
+
+- [locale] JSON file named after `${languageCode}_${localeCode}.json` eg. `en_US.json`.
+```json
+{
+  "@@locale": "en_US",
+  "welcome_tips": "You don’t know about me, without you have read a book by the name of The Adventures of Tom Sawyer; but that ain’t no matter. That book was made by Mr. Mark Twain, and he told the truth, mainly. There was things which he stretched, but mainly he told the truth.",
+  "local_time_caption": "Current local time: %s",
+  "flight_broadcast_test": "Hello %s from %s."
+}
 ```
 
 - Initializes [Translations] with locales need to support and other optional parameters.
-- IMPORTANT: Ensure [locale] supported JSON files are present in the `locale/` directory.
+- IMPORTANT: Ensure [locales] supported JSON files are present in the `locales/` directory.
 ```dart
-    List<Map<String, dynamic>> formatted = Translations.supported([
+  // [{locale, name, abbr, region, i10n, fallback}] e.g. [{locale: "en_US", name: "English (United States)", abbr: "en", region: "US"}]
+    List<Map<String, dynamic>> formatted = Translations.support([
       Localization.en_US, 
       Localization.zh_Hans, 
       Localization.fr_CA, 
@@ -68,7 +79,7 @@ flutter pub add flutter_localizations_plus
 
 - Retrieve locale JSON strings by [key] with support sprintf-style arguments
 ```dart
-    // 1. Uses sprintf-style ordered arguments for dynamic formatting.
+    // 1. Use sprintf-style ordered arguments for dynamic formatting.
     Translations.of(context).text("local_time_caption", DateTime.now());
     Translations.of(context).text("flight_broadcast_test", ["flutter_localizations_plus", "pub.dev"]);
     
@@ -79,10 +90,10 @@ flutter pub add flutter_localizations_plus
 
 - Manually updates app's locale (e.g., from UI language settings page selections).
 ```dart
-    // [{locale, name, abbr, region, i10n}] e.g. [{locale: "fr_CA", name: "français (Canada)", abbr: "fr", region: "CA"}]
-    List<Map<String, dynamic>> allSupported = Translations.allSupported;
+    // [{locale, name, abbr, region, i10n, fallback}] e.g. [{locale: "en_US", name: "English (United States)", abbr: "en", region: "US"}]
+    List<LocaleConfig> allSupported = Translations.allSupported;
     int idxSelected = 1;
-    String locale = allSupported[idxSelected]["locale"]; // Localization.fr_CA;
+    String locale = allSupported[idxSelected].locale; // Localization.en_US;
     await Translations.changeLanguage(locale);
 ```
 
