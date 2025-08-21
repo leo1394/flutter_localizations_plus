@@ -1,3 +1,6 @@
+## 0.3.1
+- bug fixed for fallback LocaleConfig
+
 ## 0.3.0
 - LocaleConfig reconstructed and README tuned
 

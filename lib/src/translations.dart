@@ -90,7 +90,7 @@ class Translations {
         .firstWhere((element) => element.locale == selected);
 
     String l10nJsonFile = localeSelected.l10n;
-    _fallbackLocalizedValues = await _loadJsonFile(l10nJsonFile);
+    _localizedValues = await _loadJsonFile(l10nJsonFile);
     locale = Locale(localeSelected.abbr, localeSelected.region);
     Translations translations = Translations(locale);
     return translations;
@@ -146,6 +146,9 @@ class Translations {
     _fallback = _localeSupportedArr!.firstWhere(
         (element) => element.fallback == true,
         orElse: () => _localeSupportedArr!.first);
+    Future.delayed(Duration.zero, () async {
+      _fallbackLocalizedValues = await _loadJsonFile(_fallback!.l10n);
+    });
 
     // initialize with current selected locale specified
     selected ??= osLocaleName;
