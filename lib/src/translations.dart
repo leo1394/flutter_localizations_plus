@@ -77,11 +77,13 @@ class Translations {
 
     String localeName = Platform.localeName;
     Map<String, dynamic> supportedDefaultLocale = _fallback!.toJson();
+    Map<String, dynamic>? supportedSelectedLocale = _selected?.toJson();
     // priority order: locale specified > platform language settings > Translations fallback locale
     List<String> localeOptions =
         _localeSupportedArr!.map<String>((item) => item.locale).toList();
 
     String selected = [
+      supportedSelectedLocale?["locale"],
       locale.toString(),
       localeName,
       supportedDefaultLocale["locale"]
@@ -133,7 +135,6 @@ class Translations {
         .map((entry) {
           int index = entry.key;
           String locale = entry.value;
-          // 应该转成对象
           String filepath = "locales/$locale.json";
           bool canItBeFallback =
               (filtered.contains(fallback) || fallback == null && index == 0);
@@ -175,6 +176,9 @@ class Translations {
       selected =
           fuzzyFiltered.isNotEmpty ? fuzzyFiltered.first : _fallback!.locale;
     }
+    _selected = _localeSupportedArr!.firstWhere(
+        (element) => element.locale == selected,
+        orElse: () => _fallback!);
     Future.delayed(
         const Duration(milliseconds: 150), () => changeLanguage(selected!));
     return _localeSupportedArr!;
@@ -186,9 +190,6 @@ class Translations {
     LocaleConfig localeConf = _localeSupportedArr!.firstWhere(
         (element) => element.locale == locale,
         orElse: () => _fallback!);
-    if (localeConf.locale == _selected?.locale) {
-      return;
-    }
     _localizedValues = await _loadJsonFile(localeConf.l10n);
     _selected = localeConf;
     controller.add(localeConf);
