@@ -1,3 +1,6 @@
+## 0.3.3
+- Add new README
+
 ## 0.3.2
 - bug fixed for fallback loading slower case
 

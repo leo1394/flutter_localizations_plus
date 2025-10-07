@@ -7,37 +7,36 @@
 [![GitHub Stars](https://img.shields.io/github/stars/leo1394/flutter_localizations_plus.svg?branch=master)](https://github.com/leo1394/flutter_localizations_plus/stargazers)
 [![GitHub License](https://img.shields.io/badge/license-MIT%20-blue.svg)](https://raw.githubusercontent.com/leo1394/flutter_localizations_plus/master/LICENSE)
 
-一站式增强型 Flutter 本地化解决方案，简化多语言集成，助力无缝应用开发。
+An enhanced Flutter localization one-stop solution that streamlines multilingual integration for seamless app development.
 
-语言: 中文 | [English](README-EN.md)
-## 平台支持
+Language: English | [中文](README.md)
+## Platform Support
 
 | Android | iOS | MacOS | Web | Linux | Windows |
 | :-----: | :-: | :---: |:---:| :---: | :-----: |
 |   ✅    | ✅  |  ✅   |  ✅   |  ✅   |   ✅    |
 
-## 环境要求
+## Requirements
 
 - Flutter >=3.0.0 <4.0.0
 - Dart: ^2.17.0
 - sprintf: ^7.0.0
 
-## 快速开始
-已发布在 pub.dev，可通过执行以下命令安装：
+## Getting started
+published on pub.dev, run this Flutter command
 ```shell
 flutter pub add flutter_localizations_plus
 ```
 
-## Dart 使用步骤
-- 重要：包含多语言 JSON 文件的 `[locales]` 目录必须在 `pubspec.yaml` 中声明。
+## Steps for Usage in Dart
+- IMPORTANT: [locales] directory which contains [locale] JSON files MUST declared in pubspec.yaml. 
 ```yaml
     flutter:
        assets:
-          - locales/     # 多语言文件夹
+          - locales/     # for multiple languages
 ```
 
-- 多语言 `[locale]` JSON 文件命名为 `${languageCode}_${localeCode}.json`，例如 `en_US.json`。
-- 多语言[locale] JSON文件中文案支持符合`sprintf`规范的变量声明
+- [locale] JSON file named after `${languageCode}_${localeCode}.json` eg. `en_US.json`.
 ```json
 {
   "@@locale": "en_US",
@@ -47,8 +46,8 @@ flutter pub add flutter_localizations_plus
 }
 ```
 
-- 初始化 `[Translations]`，传入需要支持的语言及其他可选参数。
-- 重要：确保受支持的 JSON 文件已放置在 `locales/` 目录中。
+- Initializes [Translations] with locales need to support and other optional parameters.
+- IMPORTANT: Ensure [locales] supported JSON files are present in the `locales/` directory.
 ```dart
   // [{locale, name, abbr, region, i10n, fallback}] e.g. [{locale: "en_US", name: "English (United States)", abbr: "en", region: "US"}]
     List<Map<String, dynamic>> formatted = Translations.support([
@@ -59,7 +58,7 @@ flutter pub add flutter_localizations_plus
     ], selected: Platform.localeName, fallback: Localization.en_US);
 ```
 
-- 在 `localizationsDelegates` 中添加 `LocalizationsPlusDelegate` 与 `FallbackCupertinoLocalizationsDelegate` 等委托；并将 `supportedLocales` 设为 `Translations.supportedLocales`。
+- Add delegates (`LocalizationsPlusDelegate` and `FallbackCupertinoLocalizationsDelegate`) to localizationsDelegates and assign supportedLocales with Translations.supportedLocales for WidgetsApp Created. 
 ```dart
     class MyApp extends StatelessWidget {
       const MyApp({Key? key}) : super(key: key);
@@ -79,7 +78,7 @@ flutter pub add flutter_localizations_plus
     }
 ```
 
-- 通过键值获取本地化文案，支持 sprintf 风格的参数：
+- Retrieve locale JSON strings by [key] with support sprintf-style arguments
 ```dart
     // 1. Use sprintf-style ordered arguments for dynamic formatting.
     Translations.of(context).text("local_time_caption", DateTime.now());
@@ -90,7 +89,7 @@ flutter pub add flutter_localizations_plus
     
 ```
 
-- 手动更新应用的语言（例如在 UI 语言设置页进行选择）。
+- Manually updates app's locale (e.g., from UI language settings page selections).
 ```dart
     // [{locale, name, abbr, region, i10n, fallback}] e.g. [{locale: "en_US", name: "English (United States)", abbr: "en", region: "US"}]
     List<LocaleConfig> allSupported = Translations.allSupported;
@@ -99,5 +98,5 @@ flutter pub add flutter_localizations_plus
     await Translations.changeLanguage(locale);
 ```
 
-## 附加信息
-如有任何问题，欢迎提交 issue。
+## Additional information
+Feel free to file an issue if you have any problem.
