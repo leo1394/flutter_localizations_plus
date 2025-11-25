@@ -1,3 +1,6 @@
+## 0.3.4
+- bug fixed for fallback LocaleConfig
+
 ## 0.3.3
 - Add new README
 
