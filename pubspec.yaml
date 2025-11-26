@@ -3,7 +3,7 @@ description: An enhanced Flutter localization one-stop solution that streamlines
 homepage: https://github.com/leo1394/flutter_localizations_plus
 repository: https://github.com/leo1394/flutter_localizations_plus
 issue_tracker: https://github.com/leo1394/flutter_localizations_plus/issues
-version: 0.3.4
+version: 0.3.5
 environment:
   sdk: '>=3.0.0 <4.0.0'
 

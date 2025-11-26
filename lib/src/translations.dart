@@ -137,7 +137,9 @@ class Translations {
           String locale = entry.value;
           String filepath = "locales/$locale.json";
           bool canItBeFallback =
-              fallback == null && index == 0 || locale == fallback;
+              (fallback == null || !filtered.contains(fallback)) &&
+                      index == 0 ||
+                  locale == fallback;
           LocaleConfig config =
               LocaleConfig(locale, filepath, fallback: canItBeFallback);
           return config;

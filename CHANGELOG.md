@@ -1,3 +1,6 @@
+## 0.3.5
+- tiny tuned
+
 ## 0.3.4
 - bug fixed for fallback LocaleConfig
 
