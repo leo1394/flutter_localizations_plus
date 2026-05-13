@@ -99,10 +99,11 @@ class Translations {
   }
 
   /// getter function of all standard locale list of Map filtered by `supported`
-  static get allSupported => _localeSupportedArr;
+  /// Missing type annotation.
+  static List<LocaleConfig> get allSupported => _localeSupportedArr ?? const <LocaleConfig>[];
 
   /// stream subscription for listening language changed in `Translations`
-  static get streamSubscription => controller.stream.listen(null);
+  static StreamSubscription<LocaleConfig> get streamSubscription => controller.stream.listen(null);
 
   /// getter function of fallback locale if no text found in selected locale json file
   static get fallback => _fallback;
