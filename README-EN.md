@@ -86,6 +86,11 @@ flutter pub add flutter_localizations_plus
     
     // 2. Fetches raw string in locale file
     Translations.of(context).text("welcome_tips");
+
+    // 3. extension method for BuildContext
+    // i18n() and l10n() alias for text() method, more concise and readable
+    context.i18n("local_time_caption", DateTime.now());
+    context.l10n("flight_broadcast_test", ["flutter_localizations_plus", "pub.dev"]);
     
 ```
 

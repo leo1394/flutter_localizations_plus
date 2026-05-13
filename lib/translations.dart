@@ -4,3 +4,4 @@
 library;
 
 export 'src/translations.dart';
+export 'src/translations_extension.dart';

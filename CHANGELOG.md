@@ -1,3 +1,6 @@
+## 0.3.7
+- translations extension for BuildContext added
+
 ## 0.3.6
 - tiny tuned
 
